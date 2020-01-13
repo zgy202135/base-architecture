@@ -39,10 +39,40 @@ https://www.processon.com/view/link/597ffa52e4b06a973c4d86ba
 ```
 服务端口：19500（网关）开始，依次加1
 ```
-
 - 公共服务(base-common)
+- 基础服务(base-basics)
 - 基于本地的文件管理服务(base-file-management)
 - 基于Quartz的定时任务调度(base-quartz)
 - 基于Zuul的网关(base-gateway)
 - 基于Kafka的消息总线(base-mc)
 - 基于Canal的容灾数据仓库(base-canal)
+- 
+
+#### 进度
+
+---``
+1. 公共服务
+- [x] 响应基础
+- [x] 分页基础
+- [ ] EntityManager 查询基础
+
+```
+基于接口编程：
+1、批量新增
+2、复杂查询
+3、关联查询
+4、分页查询
+```
+
+- [ ] 日期转换基础
+- [ ] http连接基础
+
+---
+2. 基础服务
+- 人员信息服务
+- 组织架构服务
+- 角色权限服务
+- 任务调度服务
+3. 网关服务
+4. 消息总线
+5. 文件管理服务
