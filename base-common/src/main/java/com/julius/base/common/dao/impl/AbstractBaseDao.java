@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -127,10 +128,18 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
      * @param jpql
      * @param parameterMap
      * @return
-     * @Description 按照条件统计
+     * @Description 按照条件统计总条数（基于JPQL）
      */
     @Override
     public long countByCondition(String jpql, Map<String, Object> parameterMap) {
+        Assert.notNull(jpql,"jpql must not be null");
+        Query query = manager.createQuery(jpql);
+        if(!ObjectUtils.isEmpty(parameterMap)){
+            for(Map.Entry<String,Object> entry : parameterMap.entrySet()){
+                query.setParameter(entry.getKey(),entry.getValue());
+            }
+        }
+
         return 0;
     }
 
