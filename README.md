@@ -54,14 +54,14 @@ https://www.processon.com/view/link/597ffa52e4b06a973c4d86ba
 1. 公共服务
 - [x] 响应基础
 - [x] 分页基础
-- [ ] EntityManager 查询基础
+- [x] EntityManager 查询基础
 
 ```
 基于接口编程：
 1、批量新增
-2、复杂查询
-3、关联查询
-4、分页查询
+2、复杂查询 --完成
+3、关联查询 
+4、分页查询 --完成
 ```
 
 - [ ] 日期转换基础
