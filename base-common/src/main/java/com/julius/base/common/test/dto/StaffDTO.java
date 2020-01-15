@@ -1,34 +1,21 @@
-package com.julius.base.common.test.entity;
-
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.julius.base.common.test.dto;
 
 /**
- * @Package: com.julius.base.common.test.entity
- * @ClassName: Staff
+ * @Package: com.julius.base.common.test.dto
+ * @ClassName: StaffDTO
  * @Author: Julius
- * @Description: 员工表
- * @Date: 2020/1/14 9:35
+ * @Description: DTO
+ * @Date: 2020/1/15 15:42
  * @Version: 1.0
  */
-@Entity(name = "Staff")
-@Table(name = "staff")
-public class Staff {
+public class StaffDTO {
 
-    @Id
-    @Column(name = "id")
     private String id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "age")
     private Integer age;
-
-    @Column(name = "department_id")
+    private Integer aaa2;
+    private Integer aaa1;
+    private Integer aaa3;
     private String departmentId;
 
     public String getId() {
@@ -55,6 +42,30 @@ public class Staff {
         this.age = age;
     }
 
+    public Integer getAaa2() {
+        return aaa2;
+    }
+
+    public void setAaa2(Integer aaa2) {
+        this.aaa2 = aaa2;
+    }
+
+    public Integer getAaa1() {
+        return aaa1;
+    }
+
+    public void setAaa1(Integer aaa1) {
+        this.aaa1 = aaa1;
+    }
+
+    public Integer getAaa3() {
+        return aaa3;
+    }
+
+    public void setAaa3(Integer aaa3) {
+        this.aaa3 = aaa3;
+    }
+
     public String getDepartmentId() {
         return departmentId;
     }
@@ -62,5 +73,5 @@ public class Staff {
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
-
 }
+
