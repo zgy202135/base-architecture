@@ -24,7 +24,7 @@ public class ResponsePage<T> {
     private Integer pageSize;
 
     @ApiModelProperty(value = "总条数")
-    private Integer totalSize = 0;
+    private Long totalSize;
 
     @ApiModelProperty(value = "总页数")
     private Integer totalPage;
@@ -33,11 +33,11 @@ public class ResponsePage<T> {
     private List<T> list;
 
 
-    ResponsePage(){
+    public ResponsePage(){
         this.list = new ArrayList<>();
     }
 
-    ResponsePage(Integer currentPage,Integer pageSize,Integer totalPage,Integer totalSize,List<T> list){
+    ResponsePage(Integer currentPage,Integer pageSize,Integer totalPage,Long totalSize,List<T> list){
         this.currentPage = currentPage;
         this.pageSize = pageSize;
         this.totalPage = totalPage;
@@ -62,11 +62,11 @@ public class ResponsePage<T> {
         this.pageSize = pageSize;
     }
 
-    public Integer getTotalSize() {
+    public Long getTotalSize() {
         return totalSize;
     }
 
-    public void setTotalSize(Integer totalSize) {
+    public void setTotalSize(Long totalSize) {
         this.totalSize = totalSize;
     }
 

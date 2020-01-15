@@ -1,8 +1,7 @@
 package com.julius.base.common.conversion;
 
-import com.julius.base.common.test.dto.StaffDTO;
-import com.julius.base.common.test.entity.Staff;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.List;
  * @Date: 2020/1/15 15:45
  * @Version: 1.0
  */
+@Component
 public class DoAndDTOConversion {
 
 
