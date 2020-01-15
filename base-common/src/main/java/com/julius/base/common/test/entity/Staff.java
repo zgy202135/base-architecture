@@ -1,9 +1,19 @@
 package com.julius.base.common.test.entity;
 
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.ReflectionUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Package: com.julius.base.common.test.entity
@@ -61,4 +71,5 @@ public class Staff {
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
+
 }

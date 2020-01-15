@@ -50,5 +50,28 @@ public class StaffDaoImpl extends AbstractBaseDao<Staff>{
         return list;
     }
 
-
+    /**
+     * @Description jpql统计
+     * @param name
+     * @param age
+     * @param departmentId
+     * @return
+     */
+    public long countByCondition(String name ,Integer age , String departmentId){
+        StringBuffer jpql = new StringBuffer("select count(id) from Staff a where 1=1");
+        Map<String,Object> parameterMap = new HashMap<>();
+        if(!StringUtils.isEmpty(name)){
+            jpql.append(" and a.name like :name ");
+            parameterMap.put("name","%"+name.trim()+"%");
+        }
+        if(age != null && age >= 0){
+            jpql.append(" and a.age = :age ");
+            parameterMap.put("age",age);
+        }
+        if(!StringUtils.isEmpty(departmentId)){
+            jpql.append(" and a.departmentId = :departmentId");
+            parameterMap.put("departmentId",departmentId.trim());
+        }
+        return countByCondition(jpql.toString(),parameterMap);
+    }
 }

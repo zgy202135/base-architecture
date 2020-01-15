@@ -139,8 +139,33 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
                 query.setParameter(entry.getKey(),entry.getValue());
             }
         }
+        long result = (Long)query.getResultList().get(0);
+        return result;
+    }
 
-        return 0;
+    /**
+     * @param firstIndex
+     * @param maxResults
+     * @param jpql
+     * @param parameterMap
+     * @param sort
+     * @return
+     * @Description 复杂分页查询
+     */
+    @Override
+    public List<T> findByConditionPage(Integer firstIndex, Integer maxResults, String jpql, Map<String, Object> parameterMap, Sort sort) {
+        Assert.notNull(jpql,"jpql must not be null");
+        jpql = jpql + joinSort(sort);
+        Query query = manager.createQuery(jpql);
+        if(!ObjectUtils.isEmpty(parameterMap)){
+            for(Map.Entry<String,Object> entry : parameterMap.entrySet()){
+                query.setParameter(entry.getKey().trim(),entry.getValue());
+            }
+        }
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(maxResults);
+        List<T> result = query.getResultList();
+        return result;
     }
 
     /**

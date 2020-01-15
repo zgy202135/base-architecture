@@ -54,4 +54,9 @@ public class StaffServiceImpl implements StaffService {
         Sort sort = Sort.by(order);
         return staffDao.findAllByCondition(name,age,departmentId, sort);
     }
+
+    @Override
+    public long countByCondition(String name, Integer age, String departmentId) {
+        return staffDao.countByCondition(name,age,departmentId);
+    }
 }

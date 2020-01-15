@@ -25,4 +25,6 @@ public interface StaffService {
     List<Staff> findByPage(Integer currentPage,Integer pageSize);
 
     List<Staff> findAllByCondition(String name, Integer age, String departmentId);
+
+    long countByCondition(String name, Integer age, String departmentId);
 }

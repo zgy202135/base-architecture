@@ -28,4 +28,14 @@ public interface StaffDao extends BaseDao<Staff> ,JpaRepository<Staff,String>{
      * @return
      */
     List<Staff> findAllByCondition(String name, Integer age, String departmentId,Sort sort);
+
+
+    /**
+     * @Description 按照条件统计
+     * @param name
+     * @param age
+     * @param departmentId
+     * @return
+     */
+    long countByCondition(String name ,Integer age , String departmentId);
 }

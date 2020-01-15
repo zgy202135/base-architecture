@@ -56,4 +56,9 @@ public class StaffController {
         return staffService.findAllByCondition(name,age,departmentId);
     }
 
+    @GetMapping(value = "/staff/count/condition")
+    public long countByCondition(@RequestParam String name,@RequestParam Integer age,@RequestParam String departmentId){
+        return staffService.countByCondition(name,age,departmentId);
+    }
+
 }

@@ -73,4 +73,15 @@ public interface BaseDao<T> {
      */
     public long countByCondition(String jpql,Map<String,Object> parameterMap);
 
+
+    /**
+     * @Description 复杂分页查询
+     * @param firstIndex
+     * @param maxResults
+     * @param jpql
+     * @param parameterMap
+     * @param sort
+     * @return
+     */
+    public List<T> findByConditionPage(Integer firstIndex,Integer maxResults,String jpql,Map<String,Object> parameterMap,Sort sort);
 }
