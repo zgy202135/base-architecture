@@ -65,6 +65,7 @@ https://www.processon.com/view/link/597ffa52e4b06a973c4d86ba
 ```
 
 - [ ] 日期转换基础
+- [ ] Consul的动态服务注册和服务发现
 - [ ] http连接基础
 
 ---
