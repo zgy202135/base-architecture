@@ -4,9 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @Package: com.julius.base.common.conversion
@@ -23,13 +26,9 @@ import java.time.format.DateTimeFormatter;
  * @Date: 2020/1/17 14:24
  * @Version: 1.0
  */
-public class BaseDateConversion {
+public abstract class BaseDateConversion {
 
     private static final Logger log = LoggerFactory.getLogger(BaseDateConversion.class);
-
-    /**
-     * @Todo 处理Java8之后的日期和String互转
-     */
 
     /**
      * @Description Date after 8 to String by custom pattern
@@ -82,5 +81,40 @@ public class BaseDateConversion {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         return LocalDateTime.parse(parameter,dateTimeFormatter);
     }
+
+
+    /**
+     * @Description Date before 8 to string by custom pattern
+     * @param date
+     * @param pattern
+     * @return
+     */
+    public String DateBeforeEightToStirng(Date date,String pattern){
+        Assert.notNull(date,"date must not be null");
+        Assert.notNull(pattern,"pattern must not be null");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * @Description String to date before 8 by custom pattern
+     * @param parameter
+     * @param pattern
+     * @return
+     */
+    public Date StringToDateBeforeEight(String parameter,String pattern){
+        Assert.notNull(parameter,"date string must not be null");
+        Assert.notNull(pattern,"pattern must not be null");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(parameter);
+        } catch (ParseException e) {
+            log.info("string to data is failed ,please the pattern");
+            e.printStackTrace();
+        }
+        return date;
+    }
+
 
 }
