@@ -21,6 +21,7 @@
 
     <modules>
         <module>base-common</module>
+        <module>base-gateway</module>
     </modules>
 
     <dependencies>
