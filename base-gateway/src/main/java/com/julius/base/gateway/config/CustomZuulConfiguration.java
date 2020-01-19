@@ -1,7 +1,10 @@
 package com.julius.base.gateway.config;
 
+import com.julius.base.gateway.route.CustomRouteLocator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,6 +20,14 @@ public class CustomZuulConfiguration {
 
     @Autowired
     private ZuulProperties zuulProperties;
+
+    @Autowired
+    private ServerProperties serverProperties;
+
+    @Bean
+    public CustomRouteLocator customRouteLocator(){
+        return new CustomRouteLocator(this.zuulProperties.getServletPath(),this.zuulProperties);
+    }
 
 
 }
