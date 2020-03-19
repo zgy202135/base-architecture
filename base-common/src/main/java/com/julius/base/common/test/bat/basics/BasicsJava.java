@@ -1,6 +1,11 @@
 package com.julius.base.common.test.bat.basics;
 
 
+import org.springframework.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Package: com.julius.base.common.test.bat
  * @ClassName: BasicsJava
@@ -35,75 +40,101 @@ package com.julius.base.common.test.bat.basics;
 public class BasicsJava {
 
 
+    /**
+     * @Description 测试泛型中的Extends
+     * 上界通配符  其类和子类
+     * @param list
+     */
+    public void testExtends(List<? extends FatherClass> list){
+        //此处其实是使用了多态的特性
+        for(FatherClass fatherClass : list){
+            System.out.println(fatherClass.login());
+        }
+    }
+
+    /**
+     * @Description 泛型中的super
+     * 下界通配符 其类和父类
+     * @param list
+     */
+    public void testSuper(List<? super SonClass> list){
+        //此处取出元素只能取出为Object
+        for(Object object : list){
+            object.getClass();
+        }
+
+    }
+
+
     public static void main(String[] args) {
-        String a = "a";
-        String b = "b";
-        String c = "a";
-        System.out.println("a="+a+",b="+b+",c="+c);
-        boolean a1 = a==b;
-        boolean a2 = a==c;
-
-        boolean b1 = a.equals(b);
-        boolean b2 = a.equals(c);
-
-        System.out.println(a1);
-        System.out.println(a2);
-        System.out.println(b1);
-        System.out.println(b2);
-
-        System.out.println("a:"+a.hashCode()+",b:"+b.hashCode()+",c:"+c.hashCode());
-
-
-        System.out.println("修改后");
-        b = "a";
-        c = "b";
-
-        System.out.println("a="+a+",b="+b+",c="+c);
-        boolean a11 = a==b;
-        boolean a21 = a==c;
-
-        boolean b11 = a.equals(b);
-        boolean b21 = a.equals(c);
-        System.out.println(a11);
-        System.out.println(a21);
-        System.out.println(b11);
-        System.out.println(b21);
-        String d = new String("a");
-        System.out.println(d==a);//false
-        System.out.println(a.equals(d));//true
-
-        System.out.println("a:"+a.hashCode()+",b:"+b.hashCode()+",c:"+c.hashCode()+",d:"+d.hashCode());
-        int i = 128;
-        Integer j = new Integer(128);
-        Integer k = new Integer(128);
-        System.out.println(i==j);//自动拆箱
-        System.out.println(k==j);
-
-        Integer l = 128;
-        Integer m = 128;
-
-        Integer n = 127;
-        Integer o = 127;
-
-        System.out.println(l==m);
-        System.out.println(n==o);
-
-        //多态之向上转型（默认）
+        BasicsJava basicsJava = new BasicsJava();
+        List<SonClass> sonClasses = new ArrayList<>();
+        sonClasses.add(new SonClass());
+        basicsJava.testExtends(sonClasses);
         FatherClass fatherClass = new SonClass();
+        System.out.println("---"+fatherClass.login());
 
-        System.out.println(fatherClass.login()+"------"+fatherClass.getPassword()+"-------"+fatherClass.getPassword());
-        StringBuilder stringBuilder = new StringBuilder();
-        StringBuffer stringBuffer = new StringBuffer();
-
-        new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }
-        ).start();
+        System.out.println(SonClass.staticLogin());
 
 
+
+//        String a = "a";
+//        String b = "b";
+//        String c = "a";
+//        System.out.println("a="+a+",b="+b+",c="+c);
+//        boolean a1 = a==b;
+//        boolean a2 = a==c;
+//
+//        boolean b1 = a.equals(b);
+//        boolean b2 = a.equals(c);
+//
+//        System.out.println(a1);
+//        System.out.println(a2);
+//        System.out.println(b1);
+//        System.out.println(b2);
+//
+//        System.out.println("a:"+a.hashCode()+",b:"+b.hashCode()+",c:"+c.hashCode());
+//
+//
+//        System.out.println("修改后");
+//        b = "a";
+//        c = "b";
+//
+//        System.out.println("a="+a+",b="+b+",c="+c);
+//        boolean a11 = a==b;
+//        boolean a21 = a==c;
+//
+//        boolean b11 = a.equals(b);
+//        boolean b21 = a.equals(c);
+//        System.out.println(a11);
+//        System.out.println(a21);
+//        System.out.println(b11);
+//        System.out.println(b21);
+//        String d = new String("a");
+//        System.out.println(d==a);//false
+//        System.out.println(a.equals(d));//true
+//
+//        System.out.println("a:"+a.hashCode()+",b:"+b.hashCode()+",c:"+c.hashCode()+",d:"+d.hashCode());
+//        int i = 128;
+//        Integer j = new Integer(128);
+//        Integer k = new Integer(128);
+//        System.out.println(i==j);//自动拆箱
+//        System.out.println(k==j);
+//
+//        Integer l = 128;
+//        Integer m = 128;
+//
+//        Integer n = 127;
+//        Integer o = 127;
+//
+//        System.out.println(l==m);
+//        System.out.println(n==o);
+//
+//        //多态之向上转型（默认）
+//        FatherClass fatherClass = new SonClass();
+//
+//        System.out.println(fatherClass.login()+"------"+fatherClass.getPassword()+"-------"+fatherClass.getPassword());
+//        StringBuilder stringBuilder = new StringBuilder();
+//        StringBuffer stringBuffer = new StringBuffer();
     }
 }

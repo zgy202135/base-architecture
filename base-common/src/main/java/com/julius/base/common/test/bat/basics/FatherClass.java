@@ -19,6 +19,10 @@ public class FatherClass {
         return "login success";
     }
 
+    public static String staticLogin(){
+        return "static login success";
+    }
+
     public String getUserName() {
         return userName;
     }
