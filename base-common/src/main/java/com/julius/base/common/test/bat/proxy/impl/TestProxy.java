@@ -34,6 +34,17 @@ public class TestProxy {
         proxy2.study();
 
 
+        /**
+         *  1:Cglib动态代理通过字节码技术为被代理类生成子类
+         *  2:并在子类中使用方法拦截的技术拦截对父类方法的全部调用
+         *  3:Cglib代理的类可以不实现任何接口
+         *  4:关键类为Enhancer 实现类子类的创建，函数回调，回到拦截；MethodInterceptor 接口，创建回调方法
+         */
+        //测试Cglib动态代理
+        CglibBeProxy cglibBeProxy = new CglibBeProxy();
+        CglibProxy cglibProxy = new CglibProxy();
+        CglibBeProxy cglibBeProxy1 = (CglibBeProxy) cglibProxy.getInstance(cglibBeProxy);
+        cglibBeProxy1.cglib();
 
     }
 }
