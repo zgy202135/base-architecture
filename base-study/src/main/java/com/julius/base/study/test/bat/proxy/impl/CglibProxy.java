@@ -1,4 +1,4 @@
-package com.julius.base.common.test.bat.proxy.impl;
+package com.julius.base.study.test.bat.proxy.impl;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

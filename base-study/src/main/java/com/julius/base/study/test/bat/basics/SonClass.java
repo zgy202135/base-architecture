@@ -1,4 +1,4 @@
-package com.julius.base.common.test.bat.basics;
+package com.julius.base.study.test.bat.basics;
 
 /**
  * @Package: com.julius.base.common.test.bat.basics

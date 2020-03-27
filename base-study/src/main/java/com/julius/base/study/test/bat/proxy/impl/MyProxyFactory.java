@@ -1,4 +1,4 @@
-package com.julius.base.common.test.bat.proxy.impl;
+package com.julius.base.study.test.bat.proxy.impl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

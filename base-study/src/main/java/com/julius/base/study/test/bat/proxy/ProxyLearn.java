@@ -1,4 +1,4 @@
-package com.julius.base.common.test.bat.proxy;
+package com.julius.base.study.test.bat.proxy;
 
 /**
  * @Package: com.julius.base.common.test.bat.proxy

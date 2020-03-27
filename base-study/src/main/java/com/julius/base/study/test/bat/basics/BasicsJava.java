@@ -1,4 +1,4 @@
-package com.julius.base.common.test.bat.basics;
+package com.julius.base.study.test.bat.basics;
 
 
 import org.springframework.util.ObjectUtils;

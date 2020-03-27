@@ -1,6 +1,6 @@
-package com.julius.base.common.test.bat.proxy.impl;
+package com.julius.base.study.test.bat.proxy.impl;
 
-import com.julius.base.common.test.bat.proxy.ProxyLearn;
+import com.julius.base.study.test.bat.proxy.ProxyLearn;
 
 /**
  * @Package: com.julius.base.common.test.bat.proxy.impl
