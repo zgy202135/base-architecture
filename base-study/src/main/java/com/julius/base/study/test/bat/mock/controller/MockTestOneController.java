@@ -22,7 +22,6 @@ public class MockTestOneController {
 
     @PostMapping(value = "/test/mock")
     public String getString(@RequestBody String list){
-        System.out.println("-----------------"+mockTestOneService.getString(list));
         return mockTestOneService.getString(list);
     }
 }

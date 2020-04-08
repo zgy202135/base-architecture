@@ -1,18 +1,24 @@
 package com.julius.base.study.test.bat.mock;
 
+import com.julius.base.study.test.bat.mock.service.OtherService;
 import com.julius.base.study.test.bat.mock.service.impl.MockTestOneServiceImpl;
+import com.julius.base.study.test.bat.mock.service.impl.OtherServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 /**
@@ -39,12 +45,17 @@ public class MockTestOneServiceTest {
     @InjectMocks
     MockTestOneServiceImpl mockTestOneService;
 
+    /**
+     * @Mock 模拟对象 不会使用该对象的真实逻辑
+     * @Spy 模拟对象 但是使用的方法都是真是逻辑
+     */
+    @Mock
+    OtherServiceImpl otherService;
 
-    @Before
+
     public void setUp(){
-        //初始化
-        MockitoAnnotations.initMocks(this);
-//        doReturn("ab").when(mockTestOneService).getString(any());
+        //初始化 将@Spy和@Mock注解的对象设置service中
+//        MockitoAnnotations.initMocks(this);
     }
 
     /**
@@ -52,17 +63,16 @@ public class MockTestOneServiceTest {
      */
     @Test
     public void testGetString(){
-        List<String> test = new ArrayList<>();
-        test.add("a");
-        test.add("b");
         String a = "ab";
-        //此处使用断言 用来验证方法结果是否符合期望值（bc）实例调用方法
-//        Assert.assertThat(mockTestOneService.getString(test),is("ab"));
-        //设置接口返回期望值
-         when(mockTestOneService.getString(anyString())).thenReturn(a);
-         //
-        String b = mockTestOneService.getString(anyString());
-         Assert.assertEquals(2,b.length());
+        //设置模拟对象的接口期望值(当不走真实数据逻辑时)
+        when(otherService.getOtherString()).thenReturn("there");
+
+        //先设置期望值，然后@Mock返回null,@Spy返回真实逻辑值
+//        doReturn("there").when(otherService);
+
+        String b = mockTestOneService.getString(a);
+        //使用断言验证接口返回的值是否正确
+        Assert.assertEquals(7,b.length());
     }
 
 

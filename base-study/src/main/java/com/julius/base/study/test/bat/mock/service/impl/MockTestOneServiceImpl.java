@@ -1,6 +1,8 @@
 package com.julius.base.study.test.bat.mock.service.impl;
 
 import com.julius.base.study.test.bat.mock.service.MockTestOneService;
+import com.julius.base.study.test.bat.mock.service.OtherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MockTestOneServiceImpl implements MockTestOneService {
 
+    @Autowired
+    private OtherService otherService;
+
     /**
      * @param list
      * @return
@@ -22,7 +27,8 @@ public class MockTestOneServiceImpl implements MockTestOneService {
     @Override
     public String getString(String list) {
         StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(list);
+        stringBuilder.append(list);
+        stringBuilder.append(otherService.getOtherString());
         return stringBuilder.toString();
     }
 }
