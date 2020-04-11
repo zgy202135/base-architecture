@@ -25,16 +25,16 @@ public class KafkaConsumer {
      * Topic
      */
 
-    String topic1 = "topic1";
+    static final String topic1 = "topic1";
 
-    String topic2 = "topic2";
+    static final String topic2 = "topic2";
 
-    String topic3 = "topic3";
+    static final String topic3 = "topic3";
 
     /**
      * 监听单个主题
      */
-    @KafkaListener(topics = {"topic1"})
+    @KafkaListener(topics = {KafkaConsumer.topic1})
     public void receive(String message){
         log.info("消费消息：{}",message);
     }
@@ -42,9 +42,23 @@ public class KafkaConsumer {
     /**
      * 监听多个主题
      */
-    @KafkaListener(topics = {"topic2","topic3"})
+    @KafkaListener(topics = {KafkaConsumer.topic2,KafkaConsumer.topic3})
     public void receives(String message){
         log.info("消费多个消息：{}",message);
+    }
+
+    /**
+     * 监听配置文件中的多个主题
+     * @param message
+     */
+    @KafkaListener(topics = {"${topic.name.topic1}","${topic.name.topic2}","${topic.name.topic3}"})
+    public void receiveProperties(String message){
+        log.info("监听配置文件中的主题 :{}",message);
+    }
+
+    @KafkaListener(topics = "#{'${topic.names}'.split(',')}")
+    public void receiveNames(String message){
+        log.info("-------------：{}",message);
     }
 
 }
