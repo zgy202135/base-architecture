@@ -68,5 +68,13 @@ public class HystrixTest<T> extends HystrixCommand<T> {
 
 
 
+    @com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
+    protected T test() throws Exception {
+        //构建get请求
+        return restTemplate.getForObject("url", (Class<T>) Object.class);
+    }
+
+
+
 
 }
