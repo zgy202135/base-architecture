@@ -47,17 +47,22 @@ public class CustomPreZuulFilter extends ZuulFilter {
 
         //校验
         String accessToken = request.getHeader("accessToken");
-
         if(StringUtils.isEmpty(accessToken)){
             ctx.setResponseStatusCode(401);
             ctx.setSendZuulResponse(false);
+//            ctx.setResponseBody("send failed");
             log.warn("token check is failed,{}",accessToken);
             return null;
         }
 
         ctx.setSendZuulResponse(true);
         ctx.setResponseStatusCode(200);
+        //覆盖真正的响应结果
+//        ctx.setResponseBody("send success");
 
+        //添加请求头信息和响应头信息
+//        ctx.addZuulRequestHeader("userName","test");
+//        ctx.getResponse().addHeader("Access-Control-Allow-Origin", "*");
         log.info("token check is successful,{}",accessToken);
         return null;
     }
