@@ -1,5 +1,8 @@
 package com.julius.base.gateway.config;
 
+import com.julius.base.gateway.filter.CustomPostZuulFilter;
+import com.julius.base.gateway.filter.CustomPreZuulFilter;
+import com.julius.base.gateway.filter.CustomRouteZuulFilter;
 import com.julius.base.gateway.route.CustomRouteLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -27,6 +30,21 @@ public class CustomZuulConfiguration {
     @Bean
     public CustomRouteLocator customRouteLocator(){
         return new CustomRouteLocator(this.zuulProperties.getServletPath(),this.zuulProperties);
+    }
+
+    @Bean
+    public CustomPreZuulFilter customPreZuulFilter(){
+        return new CustomPreZuulFilter();
+    }
+
+    @Bean
+    public CustomPostZuulFilter customPostZuulFilter(){
+        return new CustomPostZuulFilter();
+    }
+
+    @Bean
+    public CustomRouteZuulFilter customRouteZuulFilter(){
+        return new CustomRouteZuulFilter();
     }
 
 

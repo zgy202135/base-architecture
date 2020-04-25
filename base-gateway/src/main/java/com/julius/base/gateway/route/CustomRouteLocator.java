@@ -52,22 +52,29 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         this.zuulProperties = properties;
     }
 
+    /**
+     * 当某个路由重连或者宕机时，动态刷新路由，以保证整体服务的可用性
+     * todo 刷新机制
+     */
     @Override
     public void refresh() {
-        /**
-         * @Todo 动态刷新路由
-         */
+        this.doRefresh();
     }
 
-    //覆写locateRoutes
-
+    /**
+     * 覆写locateRoutes
+     * @return
+     */
     protected LinkedHashMap<String,ZuulProperties.ZuulRoute> locateRoutes(){
+        log.info("------------------加载路由---------------------");
         LinkedHashMap<String,ZuulProperties.ZuulRoute> routesMap = new LinkedHashMap<>(1<<4);
-        //将配置文件中的智能路由全部加入
+        //将配置文件中的静态路由加入
         routesMap.putAll(super.locateRoutes());
         LinkedHashMap values = null;
         Iterator var3;
         String path;
+        //处理服务中心的健康服务
+        routesMap.putAll(this.getServiceRoute());
         if(this.discoveryClient != null){
             values = new LinkedHashMap(1<<4);
             //将routesMap复制到values，并转为Iterator
@@ -78,47 +85,78 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
                 path = route.getServiceId();
                 if(path == null){
                     path =  route.getId();
-                }else{
-                    values.put(path,route);
                 }
-                //通过服务发现从注册中心获取服务列表
-                List<String> services = this.getServices();
-                //todo 处理服务注册中心的服务列表
+                if(!path.startsWith("/")){
+                    path = "/"+path;
+                }
+                //配置了前缀
+                if(StringUtils.hasText(this.zuulProperties.getPrefix())){
+                    path = this.zuulProperties.getPrefix()+path;
+                    if(!path.startsWith("/")){
+                        path = "/"+path;
+                    }
+                }
 
 
-
-
-
+                values.put(path,route);
             }
         }
+        log.info("routes:{}",values);
         return values;
     }
 
     /**
-     * @Description 获取服务中心的服务列表
+     * 处理服务中心的路由规则
+     * @return
+     */
+    public LinkedHashMap<String,ZuulProperties.ZuulRoute> getServiceRoute() {
+        LinkedHashMap<String,ZuulProperties.ZuulRoute> routesMap = new LinkedHashMap<>(1<<4);
+        //通过服务发现从注册中心获取拥有健康节点的服务列表
+        List<String> services = this.getServices();
+        if(!ObjectUtils.isEmpty(services)){
+            Iterator it13 = services.iterator();
+            while (it13.hasNext()){
+                String serviceName = (String)it13.next();
+                ZuulProperties.ZuulRoute route = new ZuulProperties.ZuulRoute();
+                route.setId(serviceName);
+                /**
+                 * 设置路由规则path-serviceId
+                 */
+                //路由serviceId
+                route.setServiceId(serviceName);
+                //路由path
+                route.setPath("/"+serviceName+"/**");
+                routesMap.put(serviceName,route);
+            }
+        }
+        return routesMap;
+    }
+
+    /**
+     * @Description 获取服务中心的健康服务列表
      * @return String === serviceId
      */
     public List<String> getServices() {
         List<String> serviceNames = this.discoveryClient.getServices();
-        log.info("discoveryClient service list:{}",serviceNames.toString());
-        List<String> services;
         if(this.consulClient != null){
-            for(String serviceName : serviceNames){
-                log.info("discoveryClient service name :{}",serviceName);
+            if(ObjectUtils.isEmpty(serviceNames)){
+                return new ArrayList<>();
+            }
+            Iterator<String> it = serviceNames.iterator();
+            while (it.hasNext()){
+                String serviceName = it.next();
                 if(StringUtils.isEmpty(serviceName)){
-                    continue;
+                    it.remove();
                 }
-                services = new ArrayList<>();
                 //获取对象服务名称的节点
-                Response response = consulClient.getHealthServices(serviceName,false,null);
+                Response response = consulClient.getHealthServices(serviceName,true,null);
                 if(response == null){
-                    continue;
+                    it.remove();
                 }
                 List<HealthService> healthServices = (List<HealthService>) response.getValue();
                 if(ObjectUtils.isEmpty(healthServices)){
-                    continue;
+                    it.remove();
                 }
-                log.info("consul client service list:{}",healthServices.toString());
             }
         }
         return serviceNames;
