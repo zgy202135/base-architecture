@@ -67,14 +67,14 @@ public class DataBaseConfig {
         }catch (Exception e){
             log.error("connection failed:[{}]",e.getMessage());
         }finally {
-            if(statement == null){
+            if(statement != null){
                 try {
                     statement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(connection == null){
+            if(connection != null){
                 try {
                     connection.close();
                 } catch (SQLException e) {
