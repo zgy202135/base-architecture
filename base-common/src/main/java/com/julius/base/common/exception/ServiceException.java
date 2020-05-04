@@ -1,4 +1,4 @@
-package com.julius.base.organization.exception;
+package com.julius.base.common.exception;
 
 /**
  * @Title: base-architecture

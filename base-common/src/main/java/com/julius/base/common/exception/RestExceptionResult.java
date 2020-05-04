@@ -1,6 +1,6 @@
-package com.julius.base.organization.exception;
+package com.julius.base.common.exception;
 
-import com.julius.base.organization.common.constants.UserConstant;
+import com.julius.base.common.constants.BaseConstant;
 import org.springframework.util.StringUtils;
 
 /**
@@ -22,11 +22,11 @@ public class RestExceptionResult {
      */
     private String message;
 
-    RestExceptionResult(Integer code,String message){
+    public RestExceptionResult(Integer code, String message){
         this.code = code;
         this.message = message;
         if(StringUtils.isEmpty(message)){
-            this.message = UserConstant.UNKNOWN_EXCEPTION;
+            this.message = BaseConstant.UNKNOWN_EXCEPTION;
         }
     }
 
