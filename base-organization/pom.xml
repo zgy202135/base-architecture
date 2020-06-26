@@ -64,33 +64,35 @@
 			<artifactId>tomcat-jdbc</artifactId>
 			<version>8.5.23</version>
 		</dependency>
-        <!-- 引入公共项目 -->
-        <dependency>
-            <groupId>com.julius</groupId>
+		<dependency>
+			<groupId>com.julius</groupId>
 			<artifactId>base-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		</dependency>
+		<!-- 引入公共项目 -->
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.julius.base.organization.BaseOrganizationApplication</mainClass>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
 		</plugins>
+		<defaultGoal>compile</defaultGoal>
 	</build>
 
 </project>
