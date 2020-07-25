@@ -40,4 +40,15 @@ public class BaseConstant {
         public static final String EMAIL_REGEX = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     }
 
+    /**
+     * 时间格式
+     */
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+
+    public static final String TIME_FORMAT = "HH:mm:ss";
+
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+
 }

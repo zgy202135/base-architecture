@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS user_info (
   id int(11) not null auto_increment primary key comment '主键ID',
   uuid varchar(40) not null unique comment '唯一标识',
   name varchar(255) not null comment '用户名',
-  sex tinyint(4) default 0 comment '性别（0男，1女）',
+  sex tinyint(4) default 2 comment '性别（0男，1女,2未知）',
   birth_date DATE default null comment '出生日期',
   login_name varchar(255) not null comment '登录名',
   password varchar(255) not null comment '登录密码',

@@ -3,6 +3,8 @@ package com.julius.base.common.page;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
+
 /**
  * @Package: com.julius.base.common.page
  * @ClassName: RequestPage
@@ -12,7 +14,9 @@ import io.swagger.annotations.ApiModelProperty;
  * @Version: 1.0
  */
 @ApiModel(value = "分页请求")
-public class RequestPage {
+public class RequestPage implements Serializable {
+
+    private static final long SERIALVERSIONID = 1L;
 
     @ApiModelProperty(value = "当前页",example = "从0开始")
     private Integer currentPage = 0;

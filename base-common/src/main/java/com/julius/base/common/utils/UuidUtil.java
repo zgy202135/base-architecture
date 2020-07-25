@@ -41,6 +41,8 @@ public class UuidUtil {
      */
     private synchronized long nextId() {
         long currTimestamp = getTimestamp();
+
+        //todo 这里需要解决服务器时间发生变化
         if (currTimestamp < lastTimestamp) {
             throw new RuntimeException("Clock moved backwards.  Refusing to generate id currTimestamp:"+currTimestamp);
         }
