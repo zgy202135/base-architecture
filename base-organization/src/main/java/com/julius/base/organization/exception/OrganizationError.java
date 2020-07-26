@@ -11,7 +11,8 @@ package com.julius.base.organization.exception;
 public enum  OrganizationError {
 
     USER_INFO_NOT_NULL(200100,"用户信息不能为空"),
-    USER_INFO_IS_NOT_EXISTS(200101,"用户信息不存在")
+    USER_INFO_IS_NOT_EXISTS(200101,"用户信息不存在"),
+    USER_UUID_NOT_NULL(200102,"用户唯一标识不能为空")
     ;
 
 

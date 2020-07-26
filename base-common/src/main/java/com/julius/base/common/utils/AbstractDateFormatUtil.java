@@ -29,26 +29,28 @@ public abstract class AbstractDateFormatUtil {
      * @param pattern
      * @return
      */
-    public Date dateToLocalDate(LocalDate localDate , LocalTime localTime ,String pattern) throws ParseException {
+    public Date dateToLocalDate(LocalDate localDate , LocalTime localTime ,String pattern){
         Assert.notNull(pattern,"date format must not be null");
         Date date = new Date();
         //由于该时间格式类是线程不安全的，所以不可在全局属性中定义该时间格式
         SimpleDateFormat sf = new SimpleDateFormat(pattern);
-
+        String dateString = null;
         if(BaseConstant.DATE_FORMAT.equals(pattern)){
-            String dateString = localDate.format(DateTimeFormatter.ofPattern(pattern));
-            date = sf.parse(dateString);
+            dateString = localDate.format(DateTimeFormatter.ofPattern(pattern));
         }
 
         if(BaseConstant.TIME_FORMAT.equals(pattern)){
-            String timeString = localTime.format(DateTimeFormatter.ofPattern(pattern));
-            date = sf.parse(timeString);
+            dateString = localTime.format(DateTimeFormatter.ofPattern(pattern));
         }
 
         if(BaseConstant.DATE_TIME_FORMAT.equals(pattern)){
             LocalDateTime localDateTime = LocalDateTime.of(localDate,localTime);
-            String dateTimeString = localDateTime.format(DateTimeFormatter.ofPattern(pattern));
-            date = sf.parse(dateTimeString);
+            dateString = localDateTime.format(DateTimeFormatter.ofPattern(pattern));
+        }
+        try {
+            date = sf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return date;
     }

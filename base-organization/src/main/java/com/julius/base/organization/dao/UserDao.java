@@ -1,4 +1,4 @@
-package com.julius.base.organization.common.dao;
+package com.julius.base.organization.dao;
 
 import com.julius.base.common.exception.ServiceException;
 import com.julius.base.organization.entity.User;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @Title: base-architecture
- * @Package com.julius.base.organization.common.dao
+ * @Package com.julius.base.organization.dao
  * @Author Julius Zhou
  * @Date 2020-07-25 20:25
  * @Description: 用户信息持久层接口

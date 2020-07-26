@@ -2,16 +2,25 @@ package com.julius.base.organization.service.impl;
 
 import com.julius.base.common.exception.ServiceException;
 import com.julius.base.common.page.ResponsePage;
-import com.julius.base.organization.common.dao.UserDao;
+import com.julius.base.organization.common.constants.UserConstant;
+import com.julius.base.organization.common.utils.CustomDataTransformUtil;
 import com.julius.base.organization.common.utils.CustomUuidUtil;
 import com.julius.base.organization.common.utils.DateFormatUtil;
+import com.julius.base.organization.dao.UserDao;
 import com.julius.base.organization.dto.UserDTO;
 import com.julius.base.organization.dto.UserRequestPageDTO;
+import com.julius.base.organization.entity.User;
+import com.julius.base.organization.exception.OrganizationError;
 import com.julius.base.organization.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * @Title: base-architecture
@@ -33,6 +42,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DateFormatUtil dateFormatUtil;
 
+    @Autowired
+    private CustomDataTransformUtil dataTransformUtil;
+
 
 
     /**
@@ -44,8 +56,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDTO insert(UserDTO userDTO) throws ServiceException {
-
-        return null;
+        if(userDTO == null){
+            throw new ServiceException(OrganizationError.USER_INFO_NOT_NULL.getCode(),OrganizationError.USER_INFO_NOT_NULL.getMessage());
+        }
+        userDTO.setUuid(uuidUtil.getUUID());
+        userDTO.setCreateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(), LocalTime.now(), UserConstant.DATE_TIME_FORMAT));
+        userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
+        User user = new User();
+        BeanUtils.copyProperties(userDTO,user);
+        user = userDao.save(user);
+        BeanUtils.copyProperties(user,userDTO);
+        return userDTO;
     }
 
     /**
@@ -69,7 +90,16 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDTO findByUuid(String uuid) throws ServiceException {
-        return null;
+        if(StringUtils.isEmpty(uuid)){
+            throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(),OrganizationError.USER_UUID_NOT_NULL.getMessage());
+        }
+        UserDTO userDTO = new UserDTO();
+        User user = userDao.findByUuid(uuid);
+        if(user == null){
+            return userDTO;
+        }
+        BeanUtils.copyProperties(user,userDTO);
+        return userDTO;
     }
 
     /**

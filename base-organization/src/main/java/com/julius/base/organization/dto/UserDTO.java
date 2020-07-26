@@ -59,7 +59,7 @@ public class UserDTO implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
-    @ApiModelProperty(value = "删除标记")
+    @ApiModelProperty(value = "删除标记",example = "0")
     private Integer deleteFlag;
 
     public String getUuid() {

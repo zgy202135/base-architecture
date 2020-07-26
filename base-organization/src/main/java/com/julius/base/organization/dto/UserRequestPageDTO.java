@@ -19,7 +19,7 @@ public class UserRequestPageDTO extends RequestPage {
     @ApiModelProperty(value = "用户名")
     private String name;
 
-    @ApiModelProperty(value = "性别（0-男，1-女，2-未知）")
+    @ApiModelProperty(value = "性别（0-男，1-女，2-未知）",example = "2")
     private Integer sex;
 
 

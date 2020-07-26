@@ -24,13 +24,13 @@ public class ServiceException extends Exception {
     ServiceException(){
         super();
     }
-    ServiceException(Integer code,String message){
+    public ServiceException(Integer code, String message){
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    ServiceException(String message){
+    public ServiceException(String message){
         super(message);
         this.message = message;
     }

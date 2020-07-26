@@ -39,12 +39,12 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Base Architecture project")
+                .title("Base Organization project")
                 //版本号
                 .version("V1.0.0")
-                .contact(new Contact("Julius Zhou", null, null))
+                .contact(new Contact("Julius Zhou", "", ""))
                 //描述
-                .description("common module api document")
+                .description("organization module api document")
                 .build();
     }
 
