@@ -7,20 +7,28 @@ import com.julius.base.organization.common.utils.CustomDataTransformUtil;
 import com.julius.base.organization.common.utils.CustomUuidUtil;
 import com.julius.base.organization.common.utils.DateFormatUtil;
 import com.julius.base.organization.dao.UserDao;
+import com.julius.base.organization.dao.dynamic.UserDynamicQuery;
 import com.julius.base.organization.dto.UserDTO;
 import com.julius.base.organization.dto.UserRequestPageDTO;
 import com.julius.base.organization.entity.User;
 import com.julius.base.organization.exception.OrganizationError;
 import com.julius.base.organization.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Title: base-architecture
@@ -44,6 +52,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CustomDataTransformUtil dataTransformUtil;
+
+    @Autowired
+    private UserDynamicQuery<User> userDynamicQuery;
 
 
 
@@ -78,7 +89,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDTO update(UserDTO userDTO) throws ServiceException {
-        return null;
+        if(userDTO == null || StringUtils.isEmpty(userDTO.getUuid())){
+            throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(), OrganizationError.USER_UUID_NOT_NULL.getMessage());
+        }
+        User user = userDao.findByUuid(userDTO.getUuid());
+        if(user == null || user.getId() == null){
+            throw new ServiceException(OrganizationError.USER_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.USER_INFO_IS_NOT_EXISTS.getMessage());
+        }
+        userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
+        BeanUtils.copyProperties(userDTO,user);
+        userDao.save(user);
+        return userDTO;
     }
 
     /**
@@ -111,7 +132,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponsePage<UserDTO> findOfPage(UserRequestPageDTO userRequestPageDTO) throws ServiceException {
-        return null;
+        Sort sort = Sort.by(Sort.Direction.DESC,"updateTime");
+        Pageable pageable = PageRequest.of(userRequestPageDTO.getCurrentPage(),userRequestPageDTO.getPageSize(),sort);
+        Map<String,Object> paramMap = new HashMap<>(1<<4);
+        if(!StringUtils.isEmpty(userRequestPageDTO.getName())){
+            paramMap.put("name",userRequestPageDTO.getName());
+        }
+        if(userRequestPageDTO.getSex() != null){
+            paramMap.put("sex",userRequestPageDTO.getSex());
+        }
+        ResponsePage<UserDTO> result = new ResponsePage<>(userRequestPageDTO.getCurrentPage(),userRequestPageDTO.getPageSize(),0,0L,null);
+        Page<User> page = userDao.findAll(userDynamicQuery.where(paramMap),pageable);
+        if(page == null){
+            return result;
+        }
+        result = dataTransformUtil.poTransformDto(page,UserDTO.class,userRequestPageDTO.getCurrentPage(),userRequestPageDTO.getPageSize());
+        return result;
     }
 
     /**
@@ -123,6 +159,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String deleteByUuid(String uuid) throws ServiceException {
-        return null;
+        if (StringUtils.isEmpty(uuid)){
+            throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(),OrganizationError.USER_UUID_NOT_NULL.getMessage());
+        }
+        User user = userDao.findByUuid(uuid);
+        if(user == null || user.getId() == null){
+            throw new ServiceException(OrganizationError.USER_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.USER_INFO_IS_NOT_EXISTS.getMessage());
+        }
+        userDao.deleteById(user.getId());
+        return uuid;
     }
 }

@@ -37,7 +37,7 @@ public class ResponsePage<T> {
         this.list = new ArrayList<>();
     }
 
-    ResponsePage(Integer currentPage,Integer pageSize,Integer totalPage,Long totalSize,List<T> list){
+    public ResponsePage(Integer currentPage,Integer pageSize,Integer totalPage,Long totalSize,List<T> list){
         this.currentPage = currentPage;
         this.pageSize = pageSize;
         this.totalPage = totalPage;

@@ -1,8 +1,10 @@
 package com.julius.base.organization.controller;
 
 import com.julius.base.common.exception.ServiceException;
+import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.dao.UserDao;
 import com.julius.base.organization.dto.UserDTO;
+import com.julius.base.organization.dto.UserRequestPageDTO;
 import com.julius.base.organization.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +35,7 @@ public class UserController {
     @PutMapping(value = "/user")
     @ApiOperation(value = "update user info")
     public UserDTO update(@RequestBody UserDTO userDTO)throws ServiceException{
-        return userService.insert(userDTO);
+        return userService.update(userDTO);
     }
 
 
@@ -41,6 +43,18 @@ public class UserController {
     @ApiOperation(value = "get user info by uuid")
     public UserDTO findByUuid(@PathVariable(value = "uuid") String uuid)throws ServiceException{
         return userService.findByUuid(uuid);
+    }
+
+    @PostMapping(value = "/user/page")
+    @ApiOperation(value = "get user info by page")
+    public ResponsePage<UserDTO> findAllOfPage(@RequestBody UserRequestPageDTO userRequestPageDTO)throws ServiceException{
+        return userService.findOfPage(userRequestPageDTO);
+    }
+
+    @DeleteMapping("/user/{uuid}")
+    @ApiOperation(value = "delete user info by uuid")
+    public String deleteByUuid(@PathVariable String uuid)throws ServiceException{
+        return userService.deleteByUuid(uuid);
     }
 
 

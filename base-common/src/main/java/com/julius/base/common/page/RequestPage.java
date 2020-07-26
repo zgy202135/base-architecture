@@ -18,10 +18,10 @@ public class RequestPage implements Serializable {
 
     private static final long SERIALVERSIONID = 1L;
 
-    @ApiModelProperty(value = "当前页",example = "0")
+    @ApiModelProperty(value = "当前页",example = "0",required = true)
     private Integer currentPage = 0;
 
-    @ApiModelProperty(value = "分页大小",example = "10")
+    @ApiModelProperty(value = "分页大小",example = "10",required = true)
     private Integer pageSize = 10;
 
     public Integer getCurrentPage() {
