@@ -38,7 +38,7 @@ public class DepartmentDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    @ApiModelProperty(value = "启用标志（0-启用，1-停用）")
+    @ApiModelProperty(value = "启用标志（0-启用，1-停用）",required = true)
     private Integer enableFlag;
 
 
