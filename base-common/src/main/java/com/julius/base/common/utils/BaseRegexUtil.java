@@ -3,6 +3,7 @@ package com.julius.base.common.utils;
 import com.julius.base.common.constants.BaseConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.regex.Matcher;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
  * @Date 2020-05-04 10:12
  * @Description: 基础校验工具类
  */
+@Component
 public abstract class BaseRegexUtil {
 
 
