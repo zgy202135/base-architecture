@@ -1,7 +1,9 @@
 package com.julius.base.organization.controller;
 
 import com.julius.base.common.exception.ServiceException;
+import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.dto.DepartmentDTO;
+import com.julius.base.organization.dto.DepartmentPageDTO;
 import com.julius.base.organization.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,6 +89,13 @@ public class DepartmentController {
     @ResponseStatus
     String deleteByUuid(@PathVariable String uuid)throws ServiceException{
         return departmentService.deleteByUuid(uuid);
+    }
+
+
+    @PostMapping(value = "/department/page")
+    @ApiOperation(value = "按照分页复杂查询")
+    ResponsePage<DepartmentDTO> findOfPage(@RequestBody DepartmentPageDTO departmentPageDTO)throws ServiceException{
+        return departmentService.findOfPage(departmentPageDTO);
     }
 
 }

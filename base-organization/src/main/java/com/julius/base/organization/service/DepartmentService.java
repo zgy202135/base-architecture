@@ -1,7 +1,9 @@
 package com.julius.base.organization.service;
 
 import com.julius.base.common.exception.ServiceException;
+import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.dto.DepartmentDTO;
+import com.julius.base.organization.dto.DepartmentPageDTO;
 
 import java.util.List;
 
@@ -55,4 +57,12 @@ public interface DepartmentService {
      * @throws ServiceException
      */
     String deleteByUuid(String uuid)throws ServiceException;
+
+    /**
+     * 复杂分页查询
+     * @param departmentPageDTO
+     * @return
+     * @throws ServiceException
+     */
+    ResponsePage<DepartmentDTO> findOfPage(DepartmentPageDTO departmentPageDTO)throws ServiceException;
 }

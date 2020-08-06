@@ -31,6 +31,12 @@ public abstract class AbstractDataTransformUtil<T> {
         ResponsePage<V> result = new ResponsePage<>();
         result.setCurrentPage(currentPage);
         result.setPageSize(pageSize);
+        if(page == null){
+            result.setTotalPage(0);
+            result.setTotalSize(0L);
+            result.setList(new ArrayList<>());
+            return result;
+        }
         result.setTotalPage(page.getTotalPages());
         result.setTotalSize(page.getTotalElements());
         List<K> sourceList = page.getContent();

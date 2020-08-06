@@ -1,27 +1,38 @@
 package com.julius.base.organization.service.impl;
 
 import com.julius.base.common.exception.ServiceException;
+import com.julius.base.common.page.RequestPage;
+import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.common.constants.UserConstant;
 import com.julius.base.organization.common.utils.CustomDataTransformUtil;
 import com.julius.base.organization.common.utils.CustomUuidUtil;
 import com.julius.base.organization.common.utils.DateFormatUtil;
 import com.julius.base.organization.dao.DepartmentDao;
+import com.julius.base.organization.dao.dynamic.DepartmentDynamicQuery;
 import com.julius.base.organization.dto.DepartmentDTO;
+import com.julius.base.organization.dto.DepartmentPageDTO;
 import com.julius.base.organization.entity.Department;
 import com.julius.base.organization.exception.OrganizationError;
 import com.julius.base.organization.service.DepartmentService;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: base-architecture
@@ -46,6 +57,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private CustomDataTransformUtil customDataTransformUtil;
+
+    @Autowired
+    private DepartmentDynamicQuery departmentDynamicQuery;
 
 
 
@@ -167,5 +181,26 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentDao.delete(department);
         log.info("delete department info by uuid end");
         return uuid;
+    }
+
+    /**
+     * 复杂分页查询
+     * @param departmentPageDTO
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public ResponsePage<DepartmentDTO> findOfPage(DepartmentPageDTO departmentPageDTO) throws ServiceException {
+        if(departmentPageDTO == null){
+            throw new ServiceException(OrganizationError.PAGE_PARAMETER_NOT_NULL.getCode(),OrganizationError.PAGE_PARAMETER_NOT_NULL.getMessage());
+        }
+        Sort sort = Sort.by(Sort.Direction.DESC,"updateTime");
+        Pageable pageable = PageRequest.of(departmentPageDTO.getCurrentPage(),departmentPageDTO.getPageSize(),sort);
+        Map<String,Object> paramMap = new HashMap<>(1<<4);
+        if(!StringUtils.isEmpty(departmentPageDTO.getName())){
+            paramMap.put("name",departmentPageDTO.getName());
+        }
+        Page<Department> page = departmentDao.findAll(departmentDynamicQuery.where(paramMap),pageable);
+        return customDataTransformUtil.poTransformDto(page,DepartmentDTO.class,departmentPageDTO.getCurrentPage(),departmentPageDTO.getPageSize());
     }
 }

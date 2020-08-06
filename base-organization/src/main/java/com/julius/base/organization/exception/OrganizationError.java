@@ -15,7 +15,8 @@ public enum  OrganizationError {
     USER_UUID_NOT_NULL(200102,"用户唯一标识不能为空"),
     DEPARTMENT_INTO_NOT_NULL(200103,"部门信息不能为空"),
     DEPARTMENT_UUID_NOT_NULL(200104,"部门唯一标识不能为空"),
-    DEPARTMENT_INFO_IS_NOT_EXISTS(200105,"部门信息不存在")
+    DEPARTMENT_INFO_IS_NOT_EXISTS(200105,"部门信息不存在"),
+    PAGE_PARAMETER_NOT_NULL(200106,"分页条件不能为空")
     ;
 
 
