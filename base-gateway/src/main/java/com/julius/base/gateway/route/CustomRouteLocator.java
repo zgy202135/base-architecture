@@ -123,6 +123,9 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
             while (it13.hasNext()){
                 String serviceName = (String)it13.next();
                 ZuulProperties.ZuulRoute route = new ZuulProperties.ZuulRoute();
+                if("gateway".equals(serviceName)){
+                    continue;
+                }
                 route.setId(serviceName);
                 /**
                  * 设置路由规则path-serviceId
