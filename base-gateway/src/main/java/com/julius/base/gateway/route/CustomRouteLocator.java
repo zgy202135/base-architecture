@@ -58,6 +58,7 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
      */
     @Override
     public void refresh() {
+        //调用了子类实现的locateRoutes
         this.doRefresh();
     }
 
