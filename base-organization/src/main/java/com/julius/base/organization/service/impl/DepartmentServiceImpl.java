@@ -1,21 +1,16 @@
 package com.julius.base.organization.service.impl;
 
 import com.julius.base.common.exception.ServiceException;
-import com.julius.base.common.page.RequestPage;
 import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.common.constants.UserConstant;
 import com.julius.base.organization.common.utils.CustomDataTransformUtil;
 import com.julius.base.organization.common.utils.CustomUuidUtil;
 import com.julius.base.organization.common.utils.DateFormatUtil;
-import com.julius.base.organization.dao.DepartmentDao;
-import com.julius.base.organization.dao.dynamic.DepartmentDynamicQuery;
 import com.julius.base.organization.dto.DepartmentDTO;
 import com.julius.base.organization.dto.DepartmentPageDTO;
 import com.julius.base.organization.entity.Department;
 import com.julius.base.organization.exception.OrganizationError;
 import com.julius.base.organization.service.DepartmentService;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -46,8 +41,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private static final Logger log = LoggerFactory.getLogger(DepartmentService.class);
 
-    @Autowired
-    private DepartmentDao departmentDao;
 
     @Autowired
     private CustomUuidUtil customUuidUtil;
@@ -57,9 +50,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private CustomDataTransformUtil customDataTransformUtil;
-
-    @Autowired
-    private DepartmentDynamicQuery departmentDynamicQuery;
 
 
 
@@ -81,7 +71,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
         Department department = new Department();
         BeanUtils.copyProperties(departmentDTO,department);
-        departmentDao.save(department);
+        //todo 新增
         BeanUtils.copyProperties(department,departmentDTO);
         log.info("insert a new department info end");
         return departmentDTO;
@@ -103,7 +93,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(StringUtils.isEmpty(departmentDTO.getUuid())){
             throw new ServiceException(OrganizationError.DEPARTMENT_UUID_NOT_NULL.getCode(),OrganizationError.DEPARTMENT_UUID_NOT_NULL.getMessage());
         }
-        Department department = departmentDao.findByUuid(departmentDTO.getUuid());
+        //todo 查询
+        Department department = null;
         if(department == null || department.getId() == null){
             throw new ServiceException(OrganizationError.DEPARTMENT_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.DEPARTMENT_INFO_IS_NOT_EXISTS.getMessage());
         }
@@ -111,7 +102,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Integer id = department.getId();
         BeanUtils.copyProperties(departmentDTO,department);
         department.setId(id);
-        departmentDao.save(department);
+        //todo 查询
         log.info(" update a department info end");
         return departmentDTO;
     }
@@ -129,7 +120,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(StringUtils.isEmpty(uuid)){
             throw new ServiceException(OrganizationError.DEPARTMENT_UUID_NOT_NULL.getCode(),OrganizationError.DEPARTMENT_UUID_NOT_NULL.getMessage());
         }
-        Department department = departmentDao.findByUuid(uuid);
+        //todo 查询
+        Department department = null;
         if(department == null){
             return null;
         }
@@ -152,7 +144,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(StringUtils.isEmpty(uuid)){
             throw new ServiceException(OrganizationError.DEPARTMENT_UUID_NOT_NULL.getCode(),OrganizationError.DEPARTMENT_UUID_NOT_NULL.getMessage());
         }
-        List<Department> departmentList = departmentDao.findAllByParentUuid(uuid);
+        //todo 查询
+        List<Department> departmentList = new ArrayList<>();
         if(departmentList == null || departmentList.size() == 0){
             return new ArrayList<>();
         }
@@ -174,11 +167,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(StringUtils.isEmpty(uuid)){
             throw new ServiceException(OrganizationError.DEPARTMENT_UUID_NOT_NULL.getCode(),OrganizationError.DEPARTMENT_UUID_NOT_NULL.getMessage());
         }
-        Department department = departmentDao.findByUuid(uuid);
+        //todo 查询
+        Department department = null;
         if(department == null){
             throw new ServiceException(OrganizationError.DEPARTMENT_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.DEPARTMENT_INFO_IS_NOT_EXISTS.getMessage());
         }
-        departmentDao.delete(department);
+        //todo 删除
         log.info("delete department info by uuid end");
         return uuid;
     }
@@ -200,7 +194,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(!StringUtils.isEmpty(departmentPageDTO.getName())){
             paramMap.put("name",departmentPageDTO.getName());
         }
-        Page<Department> page = departmentDao.findAll(departmentDynamicQuery.where(paramMap),pageable);
+        //todo 分页查询
+        Page<Department> page = null;
         return customDataTransformUtil.poTransformDto(page,DepartmentDTO.class,departmentPageDTO.getCurrentPage(),departmentPageDTO.getPageSize());
     }
 }

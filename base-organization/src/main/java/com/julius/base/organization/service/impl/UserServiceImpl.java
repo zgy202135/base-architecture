@@ -6,14 +6,11 @@ import com.julius.base.organization.common.constants.UserConstant;
 import com.julius.base.organization.common.utils.CustomDataTransformUtil;
 import com.julius.base.organization.common.utils.CustomUuidUtil;
 import com.julius.base.organization.common.utils.DateFormatUtil;
-import com.julius.base.organization.dao.UserDao;
-import com.julius.base.organization.dao.dynamic.UserDynamicQuery;
 import com.julius.base.organization.dto.UserDTO;
 import com.julius.base.organization.dto.UserRequestPageDTO;
 import com.julius.base.organization.entity.User;
 import com.julius.base.organization.exception.OrganizationError;
 import com.julius.base.organization.service.UserService;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -44,17 +41,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CustomUuidUtil uuidUtil;
 
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private DateFormatUtil dateFormatUtil;
 
     @Autowired
     private CustomDataTransformUtil dataTransformUtil;
-
-    @Autowired
-    private UserDynamicQuery<User> userDynamicQuery;
 
 
 
@@ -75,7 +67,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
-        user = userDao.save(user);
+        //todo 新增
         BeanUtils.copyProperties(user,userDTO);
         return userDTO;
     }
@@ -92,13 +84,14 @@ public class UserServiceImpl implements UserService {
         if(userDTO == null || StringUtils.isEmpty(userDTO.getUuid())){
             throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(), OrganizationError.USER_UUID_NOT_NULL.getMessage());
         }
-        User user = userDao.findByUuid(userDTO.getUuid());
+        //todo 查询
+        User user = null;
         if(user == null || user.getId() == null){
             throw new ServiceException(OrganizationError.USER_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.USER_INFO_IS_NOT_EXISTS.getMessage());
         }
         userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
         BeanUtils.copyProperties(userDTO,user);
-        userDao.save(user);
+        //todo 更新
         return userDTO;
     }
 
@@ -115,7 +108,8 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(),OrganizationError.USER_UUID_NOT_NULL.getMessage());
         }
         UserDTO userDTO = new UserDTO();
-        User user = userDao.findByUuid(uuid);
+        //todo 查询
+        User user = null;
         if(user == null){
             return userDTO;
         }
@@ -142,7 +136,8 @@ public class UserServiceImpl implements UserService {
             paramMap.put("sex",userRequestPageDTO.getSex());
         }
         ResponsePage<UserDTO> result = new ResponsePage<>(userRequestPageDTO.getCurrentPage(),userRequestPageDTO.getPageSize(),0,0L,null);
-        Page<User> page = userDao.findAll(userDynamicQuery.where(paramMap),pageable);
+        //todo 分页查询
+        Page<User> page = null;
         if(page == null){
             return result;
         }
@@ -162,11 +157,12 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(uuid)){
             throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(),OrganizationError.USER_UUID_NOT_NULL.getMessage());
         }
-        User user = userDao.findByUuid(uuid);
+        //todo 查询
+        User user = null;
         if(user == null || user.getId() == null){
             throw new ServiceException(OrganizationError.USER_INFO_IS_NOT_EXISTS.getCode(),OrganizationError.USER_INFO_IS_NOT_EXISTS.getMessage());
         }
-        userDao.deleteById(user.getId());
+        //todo 删除
         return uuid;
     }
 }
