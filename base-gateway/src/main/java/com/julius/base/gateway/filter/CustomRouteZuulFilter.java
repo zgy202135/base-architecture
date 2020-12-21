@@ -41,6 +41,8 @@ public class CustomRouteZuulFilter extends ZuulFilter {
         //验证请求头信息是否过滤掉
 
         HttpServletRequest request = ctx.getRequest();
+        //封装请求头信息
+
         return null;
     }
 }

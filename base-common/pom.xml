@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>base</docker.image.prefix>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
@@ -76,19 +77,12 @@
 				</configuration>
 			</plugin>
 			<!-- Docker maven plugin -->
+			<!-- 解决被依赖包无法被依赖的问题 -->
 			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<classifier>exec</classifier>
 				</configuration>
 			</plugin>
 		</plugins>

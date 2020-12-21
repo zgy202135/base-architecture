@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @Version: 1.0
  */
 @Component
-public class Consumer {
+public class Consumer implements Sink {
 
     private static final Logger log = LoggerFactory.getLogger(Consumer.class);
 
@@ -23,5 +25,13 @@ public class Consumer {
     @RabbitListener(queues = {"julius"})
     public void receive(String message){
         log.info("Rabbit accept message:{}",message);
+    }
+
+    /**
+     * @return input channel.
+     */
+    @Override
+    public SubscribableChannel input() {
+        return null;
     }
 }

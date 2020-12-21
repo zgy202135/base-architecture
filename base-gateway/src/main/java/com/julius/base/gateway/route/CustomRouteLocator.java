@@ -58,6 +58,7 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
      */
     @Override
     public void refresh() {
+        //调用了子类实现的locateRoutes
         this.doRefresh();
     }
 
@@ -113,11 +114,19 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         LinkedHashMap<String,ZuulProperties.ZuulRoute> routesMap = new LinkedHashMap<>(1<<4);
         //通过服务发现从注册中心获取拥有健康节点的服务列表
         List<String> services = this.getServices();
+        /**
+         * 将服务信息封装为一个ZuulRoute路由对象
+         * 将服务名字设置为ZuulRoute对象的ID和服务ID
+         * 设置指定柜子的Regex规则
+         */
         if(!ObjectUtils.isEmpty(services)){
             Iterator it13 = services.iterator();
             while (it13.hasNext()){
                 String serviceName = (String)it13.next();
                 ZuulProperties.ZuulRoute route = new ZuulProperties.ZuulRoute();
+                if("gateway".equals(serviceName)){
+                    continue;
+                }
                 route.setId(serviceName);
                 /**
                  * 设置路由规则path-serviceId
