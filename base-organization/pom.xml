@@ -62,6 +62,16 @@
 			<version>6.4.0</version>
 		</dependency>
 
+
+        <!-- 权限校验和加密 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-security</artifactId>-->
+			<!--&lt;!&ndash;<version>2.4.1</version>&ndash;&gt;-->
+		<!--</dependency>-->
+
+
 		<!-- 分布式配置中心客户端依赖 -->
 		<!--https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-config-->
 		<!--<dependency>-->
