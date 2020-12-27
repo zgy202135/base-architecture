@@ -87,7 +87,13 @@
 			<artifactId>base-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- 引入公共项目 -->
+        <dependency>
+            <groupId>com.julius</groupId>
+            <artifactId>base-common</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- 引入公共项目 -->
 	</dependencies>
 	<build>
 		<plugins>

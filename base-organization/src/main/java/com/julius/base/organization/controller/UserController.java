@@ -2,7 +2,6 @@ package com.julius.base.organization.controller;
 
 import com.julius.base.common.exception.ServiceException;
 import com.julius.base.common.page.ResponsePage;
-import com.julius.base.organization.dao.UserDao;
 import com.julius.base.organization.dto.UserDTO;
 import com.julius.base.organization.dto.UserRequestPageDTO;
 import com.julius.base.organization.service.UserService;
