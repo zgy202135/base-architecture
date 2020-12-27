@@ -1,5 +1,7 @@
 package com.julius.base.organization.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.julius.base.common.exception.ServiceException;
 import com.julius.base.common.page.ResponsePage;
 import com.julius.base.organization.common.constants.UserConstant;
@@ -10,7 +12,9 @@ import com.julius.base.organization.dto.UserDTO;
 import com.julius.base.organization.dto.UserRequestPageDTO;
 import com.julius.base.organization.entity.User;
 import com.julius.base.organization.exception.OrganizationError;
+import com.julius.base.organization.mapper.UserMapper;
 import com.julius.base.organization.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,12 +39,14 @@ import java.util.Map;
  * @Description: 用户基本信息服务层接口实现
  */
 @Service
-public class UserServiceImpl implements UserService {
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+@Slf4j
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private CustomUuidUtil uuidUtil;
-
 
     @Autowired
     private DateFormatUtil dateFormatUtil;
@@ -67,7 +73,9 @@ public class UserServiceImpl implements UserService {
         userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
-        //todo 新增
+        //新增
+        userMapper.insert(user);
+        log.info("这里校验下是否获取到主键ID：{}",user.toString());
         BeanUtils.copyProperties(user,userDTO);
         return userDTO;
     }
@@ -108,8 +116,8 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(OrganizationError.USER_UUID_NOT_NULL.getCode(),OrganizationError.USER_UUID_NOT_NULL.getMessage());
         }
         UserDTO userDTO = new UserDTO();
-        //todo 查询
-        User user = null;
+        User user = new User();
+        user = userMapper.selectOne(Wrappers.lambdaQuery(user).eq(User::getUuid,uuid));
         if(user == null){
             return userDTO;
         }

@@ -3,6 +3,8 @@ package com.julius.base.organization.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,15 +18,20 @@ import java.util.Date;
  */
 
 @ApiModel(description = "用户基本信息")
+@Data
 public class UserDTO implements Serializable {
 
-    private static final long SERAILVERSIONID = 1;
+    private static final long serialVersionUID = 1877165717562871973L;
+
 
     @ApiModelProperty(value = "唯一标识")
     private String uuid;
 
     @ApiModelProperty(value = "用户名")
     private String name;
+
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
 
     @ApiModelProperty(value = "性别")
     private String sex;
@@ -51,6 +58,24 @@ public class UserDTO implements Serializable {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @ApiModelProperty(value = "用户令牌token")
+    private String token;
+
+    @ApiModelProperty(value = "头像图片地址")
+    private String photo;
+
+    @ApiModelProperty(value = "部门UUID")
+    private String departmentUuid;
+
+    @ApiModelProperty(value = "权限uuid")
+    private String roleUuid;
+
+    @ApiModelProperty(value = "身份证号")
+    private String idCard;
+
+    @ApiModelProperty(value = "启动标签")
+    private Integer enableFlag;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
@@ -62,126 +87,4 @@ public class UserDTO implements Serializable {
     @ApiModelProperty(value = "删除标记",example = "0")
     private Integer deleteFlag;
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Integer deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "uuid='" + uuid + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthDate=" + birthDate +
-                ", loginName='" + loginName + '\'' +
-                ", password='" + password + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", deleteFlag=" + deleteFlag +
-                '}';
-    }
 }

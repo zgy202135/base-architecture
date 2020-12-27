@@ -1,8 +1,13 @@
 package com.julius.base.organization.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,13 +18,16 @@ import java.util.Date;
  * @Description: 用户信息映射实体
  */
 
-@Table(name = "user_info")
 @Entity(name = "user")
-public class User {
+@Data
+@TableName(value = "user_info")
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 6164351221169905763L;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(value = "id",type = IdType.AUTO)
     @Column(name = "id")
     //主键ID
     private Integer id;
@@ -31,6 +39,10 @@ public class User {
     @Column(name = "name")
     //用户名
     private String name;
+
+    @Column(name = "nickname")
+    //昵称
+    private String nickname;
 
     @Column(name = "sex")
     //性别
@@ -65,6 +77,35 @@ public class User {
     //邮箱
     private String email;
 
+
+    @Column(name = "token")
+    //用户令牌token
+    private String token;
+
+    @Column(name = "photo")
+    //头像图片地址
+    private String photo;
+
+    @Column(name = "department_uuid")
+    //部门UUID
+    private String departmentUuid;
+
+    @Column(name = "role_uuid")
+    //权限uuid
+    private String roleUuid;
+
+    @Column(name = "id_card")
+    //身份证号
+    private String idCard;
+
+    @Column(name = "enable_flag")
+    //启动标签
+    private Integer enableFlag;
+
+    @Column(name = "delete_flag")
+    //删除标记
+    private Integer deleteFlag;
+
     @Column(name = "create_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     //创建时间
@@ -75,140 +116,4 @@ public class User {
     //修改时间
     private Date updateTime;
 
-    @Column(name = "delete_flag")
-    //删除标记
-    private Integer deleteFlag;
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Integer deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", uuid='" + uuid + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthDate=" + birthDate +
-                ", loginName='" + loginName + '\'' +
-                ", password='" + password + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", deleteFlag=" + deleteFlag +
-                '}';
-    }
 }

@@ -40,7 +40,6 @@ public interface UserService {
      */
     UserDTO findByUuid(String uuid)throws ServiceException;
 
-
     /**
      * 按照分页查询
      * @param userRequestPageDTO
