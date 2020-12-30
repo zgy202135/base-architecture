@@ -1,6 +1,6 @@
 
 -- ----------------------------
--- Schema structure for svms_fs
+-- Schema structure for base_organization
 -- ----------------------------
 create database IF NOT EXISTS base_organization character set UTF8;
 use base_organization;
