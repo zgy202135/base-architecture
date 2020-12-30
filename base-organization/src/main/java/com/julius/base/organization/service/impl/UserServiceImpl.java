@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         userDTO.setUpdateTime(dateFormatUtil.dateToLocalDate(LocalDate.now(),LocalTime.now(),UserConstant.DATE_TIME_FORMAT));
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
-        user.setPassword(EncryptUtil.encrypt(user.getPassword()));
+        user.setPassword(EncryptUtil.bcrypt(user.getPassword()));
         //新增
         userMapper.insert(user);
         log.info("这里校验下是否获取到主键ID：{}",user.toString());

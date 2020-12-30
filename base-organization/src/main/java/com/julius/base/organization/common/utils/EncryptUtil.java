@@ -2,9 +2,12 @@ package com.julius.base.organization.common.utils;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
-
+import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -16,7 +19,21 @@ import java.nio.charset.StandardCharsets;
  */
 
 @Slf4j
-public class EncryptUtil {
+@Component
+public class EncryptUtil{
+
+    //密码编码器
+    private static PasswordEncoder passwordEncoder;
+
+    /**
+     * 初始化操作
+     */
+    @PostConstruct
+    public void init(){
+        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        log.info(passwordEncoder.toString());
+    }
+
 
     /**
      * MD5加密
@@ -30,6 +47,27 @@ public class EncryptUtil {
         return encryptKey;
     }
 
+    /**
+     * BCrypt加密
+     * @param key
+     * @return
+     */
+    public static String bcrypt(String key){
+        Assert.notNull(key,"Key must not be null");
+        return passwordEncoder.encode(key);
+    }
+
+    /**
+     * 密码校验
+     * @param password
+     * @param key
+     * @return
+     */
+    public static Boolean verifyPassword(String password,String key){
+        Assert.notNull(password,"password must not be null");
+        Assert.notNull(key,"Key must not be null");
+        return passwordEncoder.matches(key,password);
+    }
 
 
 }
