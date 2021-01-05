@@ -18,7 +18,6 @@ import java.util.Date;
  * @Description: 用户信息映射实体
  */
 
-@Entity(name = "user")
 @Data
 @TableName(value = "user_info")
 public class User implements Serializable {
@@ -26,7 +25,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = 6164351221169905763L;
 
 
-    @Id
     @TableId(value = "id",type = IdType.AUTO)
     @Column(name = "id")
     //主键ID

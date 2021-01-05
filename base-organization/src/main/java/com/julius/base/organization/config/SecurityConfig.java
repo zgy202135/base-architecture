@@ -1,6 +1,7 @@
 package com.julius.base.organization.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,6 +18,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+
+
+
+
     /**
      * 重写配置方法，主要是忽略一些请求，不走安全验证
      * @param webSecurity
@@ -24,11 +29,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity webSecurity)throws Exception{
-        webSecurity.ignoring().antMatchers("/swagger")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("swagger")
-                .antMatchers("/user");
+//        webSecurity.ignoring().antMatchers("swagger*");
+//        webSecurity.ignoring().antMatchers("/swagger");
+        webSecurity.ignoring().antMatchers("swagger-ui.html");
+        webSecurity.ignoring().antMatchers("/user");
 
+    }
+
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().antMatchers("swagger-ui.html").permitAll()
+        .antMatchers("/user").permitAll();
     }
 
 }
